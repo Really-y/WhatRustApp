@@ -1,0 +1,15 @@
+[package]
+name = "walite-ext"
+version = "0.1.0"
+edition = "2021"
+description = "WebKit web-process extension: full JS GC while WaLite is hidden"
+authors = ["Yusif Ezizov - Azedev <https://azedev.com>"]
+license-file = "../LICENSE"
+repository = "https://github.com/Really-y/WhatRustApp"
+homepage = "https://azedev.com"
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[dependencies]

@@ -1,0 +1,25 @@
+[package]
+name = "walite"
+version = "0.1.0"
+edition = "2021"
+description = "Lightweight WhatsApp Web wrapper for Linux (GTK3 + WebKitGTK)"
+authors = ["Yusif Ezizov - Azedev <https://azedev.com>"]
+license-file = "LICENSE"
+repository = "https://github.com/Really-y/WhatRustApp"
+homepage = "https://azedev.com"
+
+[dependencies]
+gtk = "0.18"
+webkit2gtk = { version = "2.0.2", features = ["v2_40"] }
+ksni = { version = "0.3.7", default-features = false, features = ["async-io", "blocking"] }
+async-channel = "2"
+
+[workspace]
+members = [".", "ext"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
