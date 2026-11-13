@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="WhatRustApp: lean, fast WhatsApp desktop client for Linux" width="100%"/>
+<img src="assets/banner-v2.svg" alt="WhatRustApp: lean, fast WhatsApp desktop client for Linux" width="100%"/>
 
 **WhatsApp Web, minus the bloat.** Voice & video calls, lower RAM, no Python, no bundled browser, and no unofficial protocol hacks.
 
