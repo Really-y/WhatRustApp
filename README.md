@@ -2,16 +2,12 @@
 
 <img src="assets/banner.svg" alt="WhatRustApp: lean, fast WhatsApp desktop client for Linux" width="100%"/>
 
-# WhatRustApp
+**WhatsApp Web, minus the bloat.** Voice & video calls, lower RAM, no Python, no bundled browser, and no unofficial protocol hacks.
 
-### A lean, fast WhatsApp desktop client for Linux, with voice & video calls
-
-**WhatsApp Web, minus the bloat.** Lower RAM, no Python, no bundled browser, and no unofficial protocol hacks.
-
-[![License: AGPL-3.0 + Commons Clause](https://img.shields.io/badge/License-AGPL--3.0%20%2B%20Commons%20Clause-blue.svg?style=for-the-badge)](LICENSE)
-![Platform](https://img.shields.io/badge/platform-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Rust](https://img.shields.io/badge/Rust-WebKitGTK-000000?style=for-the-badge&logo=rust&logoColor=white)
-![Chromium](https://img.shields.io/badge/Chromium-calls%20ready-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)
+[![License](https://img.shields.io/badge/license-AGPL--3.0%20%2B%20Commons%20Clause-0B1220?style=for-the-badge&labelColor=1B2433)](LICENSE)
+![Platform](https://img.shields.io/badge/platform-Linux-10B981?style=for-the-badge&logo=linux&logoColor=white&labelColor=1B2433)
+![Rust](https://img.shields.io/badge/Rust-WebKitGTK-D98552?style=for-the-badge&logo=rust&logoColor=white&labelColor=1B2433)
+![Calls](https://img.shields.io/badge/calls-voice%20%26%20video-10B981?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1B2433)
 
 Built by **[Yusif Ezizov · Azedev](https://azedev.com)**
 
