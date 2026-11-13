@@ -1,6 +1,8 @@
 <div align="center">
 
-# 💬 WhatRustApp
+<img src="assets/banner.svg" alt="WhatRustApp: lean, fast WhatsApp desktop client for Linux" width="100%"/>
+
+# WhatRustApp
 
 ### A lean, fast WhatsApp desktop client for Linux, with voice & video calls
 

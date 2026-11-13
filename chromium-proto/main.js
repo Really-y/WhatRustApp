@@ -32,66 +32,31 @@ let tray = null;
 let quitting = false;
 let win = null;
 
+// Logo assets: ./assets when installed, ../assets when run from the repo.
+const fs = require('fs');
+const ASSETS = [path.join(__dirname, 'assets'), path.join(__dirname, '..', 'assets')]
+  .find((d) => fs.existsSync(path.join(d, 'logo-32.png')));
+
+// Tray icon = logo, plus a red dot (top-right) when there are unread messages.
 function createTrayIcon(unread) {
-  const size = 32;
-  const buf = Buffer.alloc(size * size * 4);
-  const cx = 15.5;
-  const cy = 15.5;
-  const rOuter2 = 14 * 14;
-  const rInner2 = 7 * 7;
-  const redCx = 24.5;
-  const redCy = 7.5;
-  const rRed2 = 5 * 5;
-
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const idx = (y * size + x) * 4;
-      const dx = x - cx;
-      const dy = y - cy;
-      const d2 = dx * dx + dy * dy;
-
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      let a = 0;
-
-      if (d2 <= rOuter2) {
-        if (d2 <= rInner2) {
-          // White inner circle
-          r = 255;
-          g = 255;
-          b = 255;
-          a = 255;
-        } else {
-          // WhatsApp green circle #25D366
-          r = 0x25;
-          g = 0xd3;
-          b = 0x66;
-          a = 255;
-        }
-      }
-
-      if (unread > 0) {
-        const rdx = x - redCx;
-        const rdy = y - redCy;
-        if (rdx * rdx + rdy * rdy <= rRed2) {
-          // Red dot top-right
-          r = 255;
-          g = 0;
-          b = 0;
-          a = 255;
-        }
-      }
-
-      // createFromBitmap expects Skia's native BGRA order on Linux.
-      buf[idx] = b;
-      buf[idx + 1] = g;
-      buf[idx + 2] = r;
-      buf[idx + 3] = a;
+  const base = ASSETS ? nativeImage.createFromPath(path.join(ASSETS, 'logo-32.png')) : null;
+  if (!base || base.isEmpty()) return nativeImage.createEmpty();
+  if (unread <= 0) return base;
+  const { width, height } = base.getSize();
+  const buf = Buffer.from(base.toBitmap()); // BGRA on Linux
+  const cx = width * 0.78, cy = height * 0.22, r = width * 0.2;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const dx = x + 0.5 - cx, dy = y + 0.5 - cy;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d > r + 1) continue;
+      const i = (y * width + x) * 4;
+      // white ring around a red dot for contrast
+      const [b, g, rr] = d > r - 1.5 ? [255, 255, 255] : [40, 40, 230];
+      buf[i] = b; buf[i + 1] = g; buf[i + 2] = rr; buf[i + 3] = 255;
     }
   }
-
-  return nativeImage.createFromBitmap(buf, { width: size, height: size });
+  return nativeImage.createFromBitmap(buf, { width, height });
 }
 
 if (!app.requestSingleInstanceLock()) {
@@ -120,6 +85,7 @@ if (!app.requestSingleInstanceLock()) {
 
     win = new BrowserWindow({
       width: 1100, height: 760, title: 'WhatsApp',
+      icon: ASSETS ? path.join(ASSETS, 'logo-256.png') : undefined,
       show: !process.env.WALITE_HIDDEN,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),

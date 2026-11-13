@@ -14,11 +14,14 @@ CHROMIUM_APP="${LIB_DIR}/app"
 EXT_LIB="${LIB_DIR}/libwalite_ext.so"
 MAIN_DESKTOP="${APP_DIR}/walite.desktop"
 LITE_DESKTOP="${APP_DIR}/az.walite.WaLite.desktop"
+ICON_DIR="${HOME}/.local/share/icons/hicolor"
 
 if [ "${1:-}" = "--uninstall" ]; then
     echo "Uninstalling WaLite..."
     rm -f "${MAIN_BIN}" "${LITE_BIN}" "${EXT_LIB}" "${MAIN_DESKTOP}" "${LITE_DESKTOP}"
     rm -rf "${CHROMIUM_APP}"
+    for s in 32 64 128 256 512; do rm -f "${ICON_DIR}/${s}x${s}/apps/walite.png"; done
+    rm -f "${ICON_DIR}/scalable/apps/walite.svg"
     rmdir "${LIB_DIR}" 2>/dev/null || true
     echo "Uninstalled. Data preserved: ~/.local/share/walite-chromium, ~/.local/share/walite, ~/.cache/walite"
     exit 0
@@ -33,6 +36,12 @@ cargo build --release --workspace
 mkdir -p "${BIN_DIR}" "${LIB_DIR}" "${APP_DIR}"
 rm -rf "${CHROMIUM_APP}"
 cp -r chromium-proto "${CHROMIUM_APP}"
+cp -r assets "${CHROMIUM_APP}/assets"
+for s in 32 64 128 256 512; do
+    install -Dm644 "assets/logo-${s}.png" "${ICON_DIR}/${s}x${s}/apps/walite.png"
+done
+install -Dm644 assets/logo.svg "${ICON_DIR}/scalable/apps/walite.svg"
+gtk-update-icon-cache -q -t "${ICON_DIR}" 2>/dev/null || true
 cp target/release/walite "${LITE_BIN}"
 cp target/release/libwalite_ext.so "${EXT_LIB}"
 
@@ -48,7 +57,7 @@ cat > "${MAIN_DESKTOP}" << 'EOF'
 Name=WaLite
 Comment=WhatsApp Web (with calls)
 Exec=walite
-Icon=internet-chat
+Icon=walite
 Terminal=false
 Type=Application
 Categories=Network;InstantMessaging;
@@ -60,7 +69,7 @@ cat > "${LITE_DESKTOP}" << 'EOF'
 Name=WaLite Lite (no calls)
 Comment=WhatsApp Web on WebKitGTK, no calls
 Exec=walite-lite
-Icon=internet-chat
+Icon=walite
 Terminal=false
 Type=Application
 Categories=Network;InstantMessaging;

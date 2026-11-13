@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1118"/><stop offset="1" stop-color="#16222E"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3CF0A8"/><stop offset="1" stop-color="#FF7A3D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="28" fill="url(#bg)"/>
+  <g transform="translate(70 50) scale(0.508)">
+  <defs>
+    <linearGradient id="rust" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF7A3D"/><stop offset="1" stop-color="#C2410C"/>
+    </linearGradient>
+    <linearGradient id="bubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3CF0A8"/><stop offset="1" stop-color="#0E9F63"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#1E2A36"/><stop offset="1" stop-color="#0B1118"/>
+    </radialGradient>
+  </defs>
+  <path d="M256.0,36.0 L269.2,10.4 L299.9,14.0 L306.9,42.0 L351.5,57.8 L374.5,40.4 L400.6,57.0 L394.7,85.2 L428.0,118.8 L456.3,113.2 L472.6,139.4 L455.1,162.3 L470.5,207.0 L498.4,214.2 L501.8,245.0 L476.0,258.0 L470.5,305.0 L492.5,323.6 L482.2,352.7 L453.3,353.2 L428.0,393.2 L439.8,419.5 L417.9,441.3 L391.6,429.2 L351.5,454.2 L350.6,483.1 L321.4,493.1 L303.0,470.9 L256.0,476.0 L242.8,501.6 L212.1,498.0 L205.1,470.0 L160.5,454.2 L137.5,471.6 L111.4,455.0 L117.3,426.8 L84.0,393.2 L55.7,398.8 L39.4,372.6 L56.9,349.7 L41.5,305.0 L13.6,297.8 L10.2,267.0 L36.0,254.0 L41.5,207.0 L19.5,188.4 L29.8,159.3 L58.7,158.8 L84.0,118.8 L72.2,92.5 L94.1,70.7 L120.4,82.8 L160.5,57.8 L161.4,28.9 L190.6,18.9 L209.0,41.1 Z" fill="url(#rust)"/>
+  <circle cx="256" cy="256" r="200" fill="url(#core)"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="4"/>
+  <!-- chat bubble with tail -->
+  <path d="M256 104 a142 138 0 1 1 -86 254 l-62 24 l22 -58 a142 138 0 0 1 126 -220 z" fill="url(#bubble)"/>
+  <!-- lightning bolt -->
+  <path d="M280 150 L198 262 L250 262 L226 362 L314 236 L262 236 Z" fill="#FFFFFF"/>
+  </g>
+  <text x="390" y="165" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="92" font-weight="800" fill="url(#title)">WhatRustApp</text>
+  <text x="394" y="225" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="32" fill="#C9D4DF">Lean, fast WhatsApp desktop client for Linux</text>
+  <text x="394" y="275" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="24" fill="#7F8E9C">Calls · Low RAM · Tray · Notifications  —  by Yusif Ezizov · Azedev</text>
+</svg>
