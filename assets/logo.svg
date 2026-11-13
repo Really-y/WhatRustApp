@@ -1,20 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="rust" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#FF7A3D"/><stop offset="1" stop-color="#C2410C"/>
+    <linearGradient id="metal" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#F3C29A"/>
+      <stop offset="0.35" stop-color="#D98552"/>
+      <stop offset="0.7" stop-color="#A9502A"/>
+      <stop offset="1" stop-color="#6E2E16"/>
     </linearGradient>
-    <linearGradient id="bubble" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3CF0A8"/><stop offset="1" stop-color="#0E9F63"/>
-    </linearGradient>
-    <radialGradient id="core" cx="0.5" cy="0.4" r="0.7">
-      <stop offset="0" stop-color="#1E2A36"/><stop offset="1" stop-color="#0B1118"/>
+    <radialGradient id="core" cx="0.5" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#1B2433"/>
+      <stop offset="1" stop-color="#080C14"/>
     </radialGradient>
+    <linearGradient id="emerald" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#34D399"/>
+      <stop offset="0.55" stop-color="#10B981"/>
+      <stop offset="1" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <path d="M256.0,36.0 L269.2,10.4 L299.9,14.0 L306.9,42.0 L351.5,57.8 L374.5,40.4 L400.6,57.0 L394.7,85.2 L428.0,118.8 L456.3,113.2 L472.6,139.4 L455.1,162.3 L470.5,207.0 L498.4,214.2 L501.8,245.0 L476.0,258.0 L470.5,305.0 L492.5,323.6 L482.2,352.7 L453.3,353.2 L428.0,393.2 L439.8,419.5 L417.9,441.3 L391.6,429.2 L351.5,454.2 L350.6,483.1 L321.4,493.1 L303.0,470.9 L256.0,476.0 L242.8,501.6 L212.1,498.0 L205.1,470.0 L160.5,454.2 L137.5,471.6 L111.4,455.0 L117.3,426.8 L84.0,393.2 L55.7,398.8 L39.4,372.6 L56.9,349.7 L41.5,305.0 L13.6,297.8 L10.2,267.0 L36.0,254.0 L41.5,207.0 L19.5,188.4 L29.8,159.3 L58.7,158.8 L84.0,118.8 L72.2,92.5 L94.1,70.7 L120.4,82.8 L160.5,57.8 L161.4,28.9 L190.6,18.9 L209.0,41.1 Z" fill="url(#rust)"/>
-  <circle cx="256" cy="256" r="200" fill="url(#core)"/>
-  <circle cx="256" cy="256" r="200" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="4"/>
-  <!-- chat bubble with tail -->
-  <path d="M256 104 a142 138 0 1 1 -86 254 l-62 24 l22 -58 a142 138 0 0 1 126 -220 z" fill="url(#bubble)"/>
-  <!-- lightning bolt -->
-  <path d="M280 150 L198 262 L250 262 L226 362 L314 236 L262 236 Z" fill="#FFFFFF"/>
+  <path d="M220.68,44.93 L228.38,13.57 L283.62,13.57 L291.32,44.93 A214,214 0 0 1 330.94,55.55 L353.29,32.24 L401.14,59.86 L392.12,90.87 A214,214 0 0 1 421.13,119.88 L452.14,110.86 L479.76,158.71 L456.45,181.06 A214,214 0 0 1 467.07,220.68 L498.43,228.38 L498.43,283.62 L467.07,291.32 A214,214 0 0 1 456.45,330.94 L479.76,353.29 L452.14,401.14 L421.13,392.12 A214,214 0 0 1 392.12,421.13 L401.14,452.14 L353.29,479.76 L330.94,456.45 A214,214 0 0 1 291.32,467.07 L283.62,498.43 L228.38,498.43 L220.68,467.07 A214,214 0 0 1 181.06,456.45 L158.71,479.76 L110.86,452.14 L119.88,421.13 A214,214 0 0 1 90.87,392.12 L59.86,401.14 L32.24,353.29 L55.55,330.94 A214,214 0 0 1 44.93,291.32 L13.57,283.62 L13.57,228.38 L44.93,220.68 A214,214 0 0 1 55.55,181.06 L32.24,158.71 L59.86,110.86 L90.87,119.88 A214,214 0 0 1 119.88,90.87 L110.86,59.86 L158.71,32.24 L181.06,55.55 A214,214 0 0 1 220.68,44.93 Z" fill="url(#metal)" stroke="url(#metal)" stroke-width="10" stroke-linejoin="round"/>
+  <circle cx="256" cy="256" r="214" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2"/>
+  <circle cx="256" cy="256" r="192" fill="url(#core)"/>
+  <circle cx="256" cy="256" r="192" fill="none" stroke="#F3C29A" stroke-opacity="0.25" stroke-width="3"/>
+  <!-- centred chat bubble with a small, low-key tail -->
+  <path d="M256,128 a128,128 0 1 1 -76,231 l-46,14 l14,-44 a128,128 0 0 1 108,-201 z" fill="url(#emerald)"/>
+  <path d="M276,146 L204,270 L250,270 L236,366 L308,242 L262,242 Z" fill="#FFFFFF"/>
 </svg>
