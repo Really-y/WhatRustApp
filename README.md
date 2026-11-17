@@ -79,6 +79,8 @@ Launch **WaLite** from your app menu, or run `walite`. Scan the QR code once wit
 **`walite` (main)**
 - `WALITE_HIDDEN=1`: start in the tray
 - `WALITE_NO_GPU=1`: disable GPU acceleration (uses less RAM, scrolls less smoothly)
+- `WALITE_NO_CALL_FLAG=1`: don't force-enable web calling (see *How it works*); you get calls only if WhatsApp has enabled them for your account
+- `WALITE_NO_UA_HINTS=1`: don't override Client Hints (`navigator.userAgentData`) to report Google Chrome
 
 **`walite-lite`**
 - `WALITE_MEM_LIMIT=<MB>`: web-process memory pressure limit (default `1200`)
@@ -101,6 +103,7 @@ flowchart LR
 ```
 
 - **Main app** (`chromium-proto/`): a single renderer process with site-isolation extras and spare renderers turned off, unused Chromium features disabled, and a roomy V8 heap so the UI doesn't stall on GC. A preload script runs a full GC only while the page is hidden.
+- **Calls**: WhatsApp Web shows the call buttons only when the server-sent experiment flag `enable_web_calling` is on, and it is still rolling out per account (the official Windows app is always enabled). `walite` reports that one flag as `true` on the client side. It does not touch the protocol or any other setting, but it is a local change to WhatsApp Web's behaviour: calls may break if WhatsApp changes its code, and you use it at your own risk. Set `WALITE_NO_CALL_FLAG=1` to turn it off.
 - **Lite app** (`src/`, `ext/`): GTK3 + WebKitGTK in Rust, with a document-viewer cache model, tuned memory-pressure thresholds and a pure-Rust StatusNotifier tray (`ksni`). A tiny WebKit web-process extension (`libwalite_ext.so`) forces a full JavaScriptCore GC while the window is hidden.
 
 ## 🛠️ Build from source

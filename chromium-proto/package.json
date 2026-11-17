@@ -2,7 +2,7 @@
   "name": "walite",
   "productName": "WaLite",
   "desktopName": "walite.desktop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "main": "main.js",
   "description": "WhatsApp Web with calls on the system Chromium runtime, tuned for low RAM",

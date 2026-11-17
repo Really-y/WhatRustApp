@@ -28,6 +28,93 @@ if (process.env.WALITE_NO_GPU) sw('disable-gpu');
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) ' +
   `Chrome/${process.versions.chrome} Safari/537.36`;
 
+// WhatsApp Web shows the call buttons only when WAWebVoipGatingUtils.isCallingEnabled()
+// is true. Outside the official Windows app that is the server-sent AB prop
+// `enable_web_calling`, which is still being rolled out per account. This hook
+// runs before any page script, wraps the module loader (`__d`) and, once the
+// WAWebABProps module is defined, reports `enable_web_calling` as true. Only
+// that one flag changes; everything else still comes from WhatsApp.
+// WALITE_NO_CALL_FLAG=1 turns this off.
+const ENABLE_CALLING_HOOK = `(() => {
+  const FLAG = 'enable_web_calling';
+  const patch = (ex) => {
+    const orig = ex && ex.getABPropConfigValue;
+    if (typeof orig !== 'function' || orig.__walite) return;
+    const p = function (name) { return name === FLAG ? true : orig.apply(this, arguments); };
+    p.__walite = true;
+    ex.getABPropConfigValue = p;
+  };
+  const wrapDefine = (real) => function (name, deps, factory, flags) {
+    if (name === 'WAWebABProps' && typeof factory === 'function') {
+      const f = factory;
+      // Keep arity 7: the loader passes arguments based on factory.length.
+      factory = function (a, b, c, d, e, g, exportsObj) {
+        const r = f.apply(this, arguments);
+        patch(exportsObj);
+        return r;
+      };
+    }
+    return real.apply(this, arguments);
+  };
+  let current;
+  Object.defineProperty(window, '__d', {
+    configurable: true,
+    get() { return current; },
+    set(v) { current = typeof v === 'function' ? wrapDefine(v) : v; },
+  });
+})();`;
+
+// Attaches the Chrome DevTools Protocol to the page once, before WhatsApp loads:
+// - Client Hints (navigator.userAgentData, Sec-CH-UA) report "Google Chrome" to
+//   match the UA string (Electron says "Chromium"). WALITE_NO_UA_HINTS=1 skips it.
+// - injects ENABLE_CALLING_HOOK into every new document.
+async function preparePage(wc) {
+  const hints = !process.env.WALITE_NO_UA_HINTS;
+  const calls = !process.env.WALITE_NO_CALL_FLAG;
+  if (!hints && !calls) return;
+  try {
+    wc.debugger.attach('1.3');
+  } catch (e) {
+    console.error('walite: cannot attach debugger:', e.message);
+    return;
+  }
+  if (calls) {
+    try {
+      await wc.debugger.sendCommand('Page.enable');
+      await wc.debugger.sendCommand('Page.addScriptToEvaluateOnNewDocument', { source: ENABLE_CALLING_HOOK });
+    } catch (e) {
+      console.error('walite: call flag hook failed:', e.message);
+    }
+  }
+  if (!hints) return;
+  const full = process.versions.chrome;
+  const major = full.split('.')[0];
+  const brands = (v, filler) => [
+    { brand: 'Google Chrome', version: v },
+    { brand: 'Chromium', version: v },
+    { brand: 'Not-A.Brand', version: filler },
+  ];
+  try {
+    await wc.debugger.sendCommand('Emulation.setUserAgentOverride', {
+      userAgent: UA,
+      userAgentMetadata: {
+        brands: brands(major, '24'),
+        fullVersionList: brands(full, '24.0.0.0'),
+        fullVersion: full,
+        platform: 'Linux',
+        platformVersion: '',
+        architecture: 'x86',
+        bitness: '64',
+        model: '',
+        mobile: false,
+        wow64: false,
+      },
+    });
+  } catch (e) {
+    console.error('walite: Client Hints override failed:', e.message);
+  }
+}
+
 let tray = null;
 let quitting = false;
 let win = null;
@@ -181,6 +268,9 @@ if (!app.requestSingleInstanceLock()) {
       }
     });
 
-    win.loadURL('https://web.whatsapp.com/', { userAgent: UA });
+    // The CDP override needs a live renderer, so load a blank page first.
+    win.loadURL('about:blank')
+      .then(() => preparePage(win.webContents))
+      .then(() => win.loadURL('https://web.whatsapp.com/', { userAgent: UA }));
   });
 }
